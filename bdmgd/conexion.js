@@ -9,7 +9,7 @@ var dconect= process.env.conectString;
 function conectar() {
     return new Promise((resolve, reject) => {
         mongoose.connect(dconect, { useMongoClient: true, promiseLibrary: global.Promise }, (err) => {
-			console.log({conexionbd:err);
+			console.log({conexionbd:err});
             if (err != null) {
 
                 resolve({ error: true });

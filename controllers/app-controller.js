@@ -6,12 +6,14 @@ var mgbfrontPageModel = require('../bdmgd/model/frontPageAdm');
 var mgbpeticionesCurso = require('../bdmgd/model/peticionesCurso');
 var crypto = require('../util-implements/cryptojs-implement');
 var soap = require('soap');
+var client = process.env.client_id;
+var cs=process.env.client_secret;
 const paypal = require('paypal-rest-sdk');
 const paypalnvp= require('paypal-nvp-api');
 var first_config = {
     'mode': 'live',
-    'client_id': 'AbgrCS6JK2GrGjAjSuP33OcmLrMUAL0NponEMcoufOsQVHBrdF2brNYXI5yOeODE53_X7kKR_59DRwpw',
-    'client_secret': 'EHurGOilt8t4zwxlQqckWqjzxm47oiYkPq_QPaFD-aKcUOd4LuhGVYVkJwcC1cxtzzJMTMSdswRJT1BM'
+    'client_id': client,
+    'client_secret': cs
     
 };
 

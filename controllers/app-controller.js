@@ -156,7 +156,7 @@ function setPerfil(req,res){
 function transaccionPayPal(req,res){
     let data =req.body;
     console.log({transaccionPayPal:data});
-    res.status(200).json({ok:ok});
+    res.status(200).json({ok:'ok'});
  
     /*
     

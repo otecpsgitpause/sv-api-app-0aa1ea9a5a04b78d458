@@ -154,10 +154,11 @@ function setPerfil(req,res){
 }
 
 function transaccionPayPal(req,res){
-
+    let data =req.body;
+    console.log({transaccionPayPal:data});
 
  
- 
+    /*
     
     try{
         let transaccion=escape(req.body.data);
@@ -174,7 +175,7 @@ function transaccionPayPal(req,res){
           }).catch((err)=>{
               console.log({errorNvp:err});
           })*/
-        console.log({transaccion:transaccion});
+       /* console.log({transaccion:transaccion});
         var start_date = "2017-01-01";
         var end_date = "2017-12-12";
         var saleId = "6XM17843J7179532P";
@@ -200,7 +201,7 @@ function transaccionPayPal(req,res){
                 console.log({refund:refund});
                }
            })*/
-
+/*
     }catch(e){
         method.respuesta({pay:null,error:true,mensaje:'Tuvimos un problema al verificar su transacción, intente despues.'})
     }
@@ -218,6 +219,8 @@ function transaccionPayPal(req,res){
     }
     //let credential= paypal.configure(first_config);
     //console.log({credetial:credential});
+    
+    */
 }
 
 function soapSence() {

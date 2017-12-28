@@ -17,7 +17,8 @@ var usuarios = Schema({
 
         fechaInscripcion: Object,
         terminoCurso:{
-            fecha:""
+            fecha:"",
+            resultados:""
         },
         
 

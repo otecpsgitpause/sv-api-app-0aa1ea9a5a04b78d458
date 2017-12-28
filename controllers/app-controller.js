@@ -199,7 +199,7 @@ function transaccionPayPal(req,res){
                                         
                                                  mgbUsuariosModel.update({"cliente.email":comprador},{
                     $set:{
-                        cursosSuscrito:cursosSuscritoUser
+                        cursosSuscrito:resCli.cursosSuscrito
                     }
                 },(err,raw)=>{
                     if(err==null){
@@ -222,7 +222,7 @@ function transaccionPayPal(req,res){
                                           
                                                  mgbUsuariosModel.update({"cliente.email":comprador},{
                     $set:{
-                        cursosSuscrito:cursosSuscritoUser
+                        cursosSuscrito:resCli.cursosSuscrito
                     }
                 },(err,raw)=>{
                     if(err==null){
@@ -239,7 +239,7 @@ function transaccionPayPal(req,res){
                                        resCli.cursosSuscrito.push(modelObjectCursoSuscrito);
                                               mgbUsuariosModel.update({"cliente.email":comprador},{
                     $set:{
-                        cursosSuscrito:cursosSuscritoUser
+                        cursosSuscrito:resCli.cursosSuscrito
                     }
                 },(err,raw)=>{
                     if(err==null){

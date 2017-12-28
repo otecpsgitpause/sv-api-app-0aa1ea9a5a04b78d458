@@ -29,7 +29,7 @@
     "paypal-nvp-api": "^1.2.33",
     "paypal-rest-sdk": "^1.8.1",
     "paypal_payment": "^1.0.0",
-    "soap": "^0.23.0"",
+    "soap": "^0.23.0",
     "moment": "^2.19.2",
     "moment-timezone": "^0.5.14"
   }

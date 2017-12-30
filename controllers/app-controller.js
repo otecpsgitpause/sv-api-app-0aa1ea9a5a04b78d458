@@ -164,106 +164,112 @@ function transaccionPayPal(req, res) {
         let itemNumber = data.item_number1;
         let comprador = data.payer_email;
         let detailPay = data;
-        mgbCursosModel.findOne({ "curso.codigoVenta": itemNumber }, (err, resCurso) => {
-            if (err == null && resCurso != null) {
-                mgbUsuariosModel.findOne({ "cliente.email": comprador }, (errCli, resCli) => {
-                    if (errCli == null && resCli != null) {
+        let status = data.payment_status;
 
-                        // model inscripcion curso
-                        let modelObjectCursoSuscrito = {
-                            curso: {
-                                data: resCurso.curso
-
-                            },
-                            esquema: resCurso.esquema,
-                            avances: [],
-                            pruebasContestadas: [
-
-                            ],
-
-
-                            fechaInscripcion: { fecha: moment().format('MMMM Do YYYY, h:mm:ss a') },
-                            terminoCurso: {
-                                fecha: ""
-                            }
-                        }
-
-                        let misCursos = resCli.cursosSuscrito;
-                        if (misCursos.length != 0) {
-                            console.log("cursos mayor a cero");
-                            //verificar Existencia Curso
-                            let idxCurso = _.findIndex(misCursos, (o) => {
-                                return o.curso.data.codigoVenta==itemNumber;
-                            })
-                            if (idxCurso == -1) {
-                                resCli.cursosSuscrito.push(modelObjectCursoSuscrito);
-
-                                mgbUsuariosModel.update({ "cliente.email": comprador }, {
-                                    $set: {
-                                        cursosSuscrito: resCli.cursosSuscrito
-                                    }
-                                }, (err, raw) => {
-                                    if (err == null) {
-                                        //informar al usuario por correo que se inscribio en un curso
-
-                                    } else {
-                                        // error al inscribir al usuario en un curso
-                                    }
-                                })
-                                //inscribir curso por primera vez
-
-
-
-                                //cursoInscrito renombrar
-                            } else {
-
-                                resCli.cursosSuscrito.splice(idxCurso, 1, modelObjectCursoSuscrito);
-
-                                mgbUsuariosModel.update({ "cliente.email": comprador }, {
-                                    $set: {
-                                        cursosSuscrito: resCli.cursosSuscrito
-                                    }
-                                }, (err, raw) => {
-                                    if (err == null) {
-                                        //informar al usuario por correo que se inscribio en un curso
-
-                                    } else {
-                                        // error al inscribir al usuario en un curso
-                                    }
-                                })
-
-
-
-
-                            }
-
-                        } else {
-                            resCli.cursosSuscrito.push(modelObjectCursoSuscrito);
-                            mgbUsuariosModel.update({ "cliente.email": comprador }, {
-                                $set: {
-                                    cursosSuscrito: resCli.cursosSuscrito
+        if (status == 'Completed') {
+            console.log('status completed');
+            mgbCursosModel.findOne({ "curso.codigoVenta": itemNumber }, (err, resCurso) => {
+                if (err == null && resCurso != null) {
+                    mgbUsuariosModel.findOne({ "cliente.email": comprador }, (errCli, resCli) => {
+                        if (errCli == null && resCli != null) {
+    
+                            // model inscripcion curso
+                            let modelObjectCursoSuscrito = {
+                                curso: {
+                                    data: resCurso.curso
+    
+                                },
+                                esquema: resCurso.esquema,
+                                avances: [],
+                                pruebasContestadas: [
+    
+                                ],
+    
+    
+                                fechaInscripcion: { fecha: moment().format('MMMM Do YYYY, h:mm:ss a') },
+                                terminoCurso: {
+                                    fecha: ""
                                 }
-                            }, (err, raw) => {
-                                if (err == null) {
-                                    //informar al usuario por correo que se inscribio en un curso
-
+                            }
+    
+                            let misCursos = resCli.cursosSuscrito;
+                            if (misCursos.length != 0) {
+                                console.log("cursos mayor a cero");
+                                //verificar Existencia Curso
+                                let idxCurso = _.findIndex(misCursos, (o) => {
+                                    return o.curso.data.codigoVenta == itemNumber;
+                                })
+                                if (idxCurso == -1) {
+                                    resCli.cursosSuscrito.push(modelObjectCursoSuscrito);
+    
+                                    mgbUsuariosModel.update({ "cliente.email": comprador }, {
+                                        $set: {
+                                            cursosSuscrito: resCli.cursosSuscrito
+                                        }
+                                    }, (err, raw) => {
+                                        if (err == null) {
+                                            //informar al usuario por correo que se inscribio en un curso
+    
+                                        } else {
+                                            // error al inscribir al usuario en un curso
+                                        }
+                                    })
+                                    //inscribir curso por primera vez
+    
+    
+    
+                                    //cursoInscrito renombrar
                                 } else {
-                                    // error al inscribir al usuario en un curso
+    
+                                    resCli.cursosSuscrito.splice(idxCurso, 1, modelObjectCursoSuscrito);
+    
+                                    mgbUsuariosModel.update({ "cliente.email": comprador }, {
+                                        $set: {
+                                            cursosSuscrito: resCli.cursosSuscrito
+                                        }
+                                    }, (err, raw) => {
+                                        if (err == null) {
+                                            //informar al usuario por correo que se inscribio en un curso
+    
+                                        } else {
+                                            // error al inscribir al usuario en un curso
+                                        }
+                                    })
+    
+    
+    
+    
                                 }
-                            })
-                            //inscribir primer curso
+    
+                            } else {
+                                resCli.cursosSuscrito.push(modelObjectCursoSuscrito);
+                                mgbUsuariosModel.update({ "cliente.email": comprador }, {
+                                    $set: {
+                                        cursosSuscrito: resCli.cursosSuscrito
+                                    }
+                                }, (err, raw) => {
+                                    if (err == null) {
+                                        //informar al usuario por correo que se inscribio en un curso
+    
+                                    } else {
+                                        // error al inscribir al usuario en un curso
+                                    }
+                                })
+                                //inscribir primer curso
+                            }
+                        } else {
+                            //no se encontro al cliente
+                            res.status(200).json({ ok: 'ok' });
                         }
-                    } else {
-                        //no se encontro al cliente
-                        res.status(200).json({ ok: 'ok' });
-                    }
-                })
-            } else {
-                //no se encontro el curso
-                res.status(200).json({ ok: 'ok' });
-            }
-        })
-        res.status(200).json({ ok: 'ok' });
+                    })
+                } else {
+                    //no se encontro el curso
+                    res.status(200).json({ ok: 'ok' });
+                }
+            })
+            res.status(200).json({ ok: 'ok' });
+        }
+       
 
 
 

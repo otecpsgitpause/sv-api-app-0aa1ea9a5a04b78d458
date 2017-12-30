@@ -189,7 +189,8 @@ function transaccionPayPal(req, res) {
                         }
 
                         let misCursos = resCli.cursosSuscrito;
-                        if (misCursos.length > 0) {
+                        if (misCursos.length != 0) {
+                            console.log("cursos mayor a cero");
                             //verificar Existencia Curso
                             let idxCurso = _.findIndex(misCursos, (o) => {
 

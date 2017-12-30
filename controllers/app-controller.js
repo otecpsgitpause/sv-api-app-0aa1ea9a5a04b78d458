@@ -192,8 +192,8 @@ function transaccionPayPal(req, res) {
                                 }
                             }
     
-                            let misCursos = resCli.cursosSuscrito;
-                            if (misCursos.length != 0) {
+                          
+                            if (resCli.cursosSuscrito.length > 0) {
                                 console.log("cursos mayor a cero");
                                 //verificar Existencia Curso
                                 let idxCurso = _.findIndex(misCursos, (o) => {
@@ -220,7 +220,7 @@ function transaccionPayPal(req, res) {
     
                                     //cursoInscrito renombrar
                                 } else {
-    
+                                    console.log('curso distinto a -1 ');
                                     resCli.cursosSuscrito.splice(idxCurso, 1, modelObjectCursoSuscrito);
     
                                     mgbUsuariosModel.update({ "cliente.email": comprador }, {

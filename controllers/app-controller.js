@@ -217,6 +217,8 @@ function setPerfil(req, res) {
                             console.log('cuenta paypal comprobación paso');
                             resolve(true);
                         }
+                    }else{
+                        resolve(true);
                     }
                 })
             })

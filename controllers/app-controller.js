@@ -94,35 +94,51 @@ function setPerfil(req, res) {
             console.log({ usuarioEncontrado: userSearch, errUsuarioEncontrado: err });
             if (err == null) {
                 if (userSearch == null) {
-                    usuario.identificador = ident;
-                    usuario.rol = rol;
-                    usuario.cliente = perfil;
-                    usuario.cursosSuscrito = [];
-                    usuario.temPruebaInit = null;
-                    usuario.save((err, guard) => {
-                        if (err) {
-                            method.respuesta({ perfil: null, error: true, mensaje: 'Hubo un error al concretar su solicitud' })
-                        } else {
-                            if (!guard) {
-                                method.respuesta({ perfil: null, error: true, mensaje: 'Hubo un error al actualizar el perfil' })
-                            } else {
-                                mgbUsuariosModel.findOne({ "cliente.rut": perfil.rut }, (errSearchSave, userSearchSave) => {
-                                    if (errSearchSave == null && userSearchSave != null) {
-                                        method.respuesta({ perfil: userSearchSave.cliente, error: false, mensaje: 'Perfil actualizado con exito' })
-                                    } else {
+                    methodJob.verficiarCuentaPaypal().then((verificacion)=>{
+                        if(verificacion==true){
+                            usuario.identificador = ident;
+                            usuario.rol = rol;
+                            usuario.cliente = perfil;
+                            usuario.cursosSuscrito = [];
+                            usuario.temPruebaInit = null;
+                            usuario.save((err, guard) => {
+                                if (err) {
+                                    method.respuesta({ perfil: null, error: true, mensaje: 'Hubo un error al concretar su solicitud' })
+                                } else {
+                                    if (!guard) {
                                         method.respuesta({ perfil: null, error: true, mensaje: 'Hubo un error al actualizar el perfil' })
+                                    } else {
+                                        mgbUsuariosModel.findOne({ "cliente.rut": perfil.rut }, (errSearchSave, userSearchSave) => {
+                                            if (errSearchSave == null && userSearchSave != null) {
+                                                method.respuesta({ perfil: userSearchSave.cliente, error: false, mensaje: 'Perfil actualizado con exito' })
+                                            } else {
+                                                method.respuesta({ perfil: null, error: true, mensaje: 'Hubo un error al actualizar el perfil' })
+                                            }
+                                        })
                                     }
-                                })
-                            }
+                                }
+                            })
+                        }else{
+                            method.respuesta({ perfil: null, error: true, mensaje: 'La cuenta paypal está siendo utilizada por otro usuario' }) 
                         }
                     })
+           
                 } else {
+                    methodJob.buscarUsuario();
+      
 
+        
+                }
+            } else {
+                method.respuesta({ perfil: null, error: true, mensaje: 'Hubo un error al concretar su solicitud' })
+            }
+
+            var methodJob={
+                buscarUsuario:()=>{
                     mgbUsuariosModel.find({},(err,resClientesOtec)=>{
-
                         if(err==null && resClientesOtec.length>0){
                             let idxClient = _.findIndex(resClientesOtec,(o)=>{
-                                return o.cliente.correoPago==perfil.correoPago;
+                                return o.cliente.correoPago==perfil.correoPago ;
                             })
 
                             if(idxClient!=-1){
@@ -135,7 +151,7 @@ function setPerfil(req, res) {
                                     }
                                 }, (errUpdate, docUpdate, resUpdate) => {
                                     if (errUpdate == null) {
-                                        method.respuesta({ perfil: docUpdate.cliente, error: false, mensaje: 'Datos actualizados con exito, cuenta paypal existente' })
+                                        method.respuesta({ perfil: docUpdate.cliente, error: false, mensaje: 'Datos actualizados con exito' })
             
                                     } else {
                                         method.respuesta({ perfil: null, error: true, mensaje: 'Hubo un error al actualizar el perfil' })
@@ -159,17 +175,34 @@ function setPerfil(req, res) {
                             }
 
                         }else{
-
+                            method.respuesta({ perfil: null, error: true, mensaje: 'Hubo un error al actualizar el perfil' })
                         }
                     })
-
-
         
+                },
+                verficiarCuentaPaypal:()=>{
+                    return new Promise((resolve,reject)=>{
+                        mgbUsuariosModel.find({},(err,resClientesOtec)=>{
+                            if(err==null && resClientesOtec.length>0){
+                                let idxClient = _.findIndex(resClientesOtec,(o)=>{
+                                    return o.cliente.correoPago==perfil.correoPago;
+                                })
+                                if(idxClient!=-1){
+                                    resolve(false);
+                                }else{
+                                    resolve(true);
+                                }
+                            }
+                        })
+                    })
+           
                 }
-            } else {
-                method.respuesta({ perfil: null, error: true, mensaje: 'Hubo un error al concretar su solicitud' })
             }
+
+
         })
+
+ 
 
     } catch (e) {
         method.respuesta({ perfil: null, error: true, mensaje: 'Hubo un error al concretar su solicitud' })
@@ -185,6 +218,7 @@ function setPerfil(req, res) {
                 })
             })
         }
+  
 
     }
 

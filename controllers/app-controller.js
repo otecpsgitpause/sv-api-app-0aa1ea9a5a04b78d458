@@ -94,7 +94,7 @@ function setPerfil(req, res) {
             console.log({ usuarioEncontrado: userSearch, errUsuarioEncontrado: err });
             if (err == null) {
                 if (userSearch == null) {
-                    methodJob.verficiarCuentaPaypal().then((verificacion)=>{
+                    methodJob.verificarPaypal().then((verificacion)=>{
                         if(verificacion==true){
                             usuario.identificador = ident;
                             usuario.rol = rol;
@@ -180,7 +180,7 @@ function setPerfil(req, res) {
                     })
         
                 },
-                verficiarCuentaPaypal:()=>{
+                verificarPaypal:()=>{
                     return new Promise((resolve,reject)=>{
                         mgbUsuariosModel.find({},(err,resClientesOtec)=>{
                             if(err==null && resClientesOtec.length>0){

@@ -203,7 +203,7 @@ function setPerfil(req, res) {
             })
 
         },
-        verificarPaypal:()=>{
+        verificarPaypal:(perfil)=>{
             return new Promise((resolve,reject)=>{
                 mgbUsuariosModel.find({},(err,resClientesOtec)=>{
                     if(err==null && resClientesOtec.length>0){

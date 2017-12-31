@@ -94,7 +94,7 @@ function setPerfil(req, res) {
             console.log({ usuarioEncontrado: userSearch, errUsuarioEncontrado: err });
             if (err == null) {
                 if (userSearch == null) {
-                    methodJob.verificarPaypal(perfil).then((verificacion)=>{
+                    method.verificarPaypal(perfil).then((verificacion)=>{
                         if(verificacion==true){
                             usuario.identificador = ident;
                             usuario.rol = rol;
@@ -124,7 +124,7 @@ function setPerfil(req, res) {
                     })
            
                 } else {
-                    methodJob.buscarUsuario(perfil);
+                    method.buscarUsuario(perfil);
       
 
         

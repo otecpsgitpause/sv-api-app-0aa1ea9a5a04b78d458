@@ -95,6 +95,7 @@ function setPerfil(req, res) {
             if (err == null) {
                 if (userSearch == null) {
                     method.verificarPaypal(perfil).then((verificacion)=>{
+                        console.log({verificacionCuentaPaypal:verificacion});
                         if(verificacion==true){
                             usuario.identificador = ident;
                             usuario.rol = rol;
@@ -210,8 +211,10 @@ function setPerfil(req, res) {
                             return o.cliente.correoPago==perfil.correoPago;
                         })
                         if(idxClient!=-1){
+                            console.log('cuenta paypal comprobación no paso');
                             resolve(false);
                         }else{
+                            console.log('cuenta paypal comprobación paso');
                             resolve(true);
                         }
                     }

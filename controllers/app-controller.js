@@ -167,10 +167,10 @@ function setPerfil(req, res) {
                     if(idxClient!=-1){
                         let clienteExistente = resClientesOtec[idxClient];
                         clienteExistente.cliente=perfil;
-                        clienteExistente.cliente=resClientesOtec[idxClient].cliente.correoPago;
+                        clienteExistente.cliente.correoPago=resClientesOtec[idxClient].cliente.correoPago;
                         mgbUsuariosModel.update({ "cliente.email": perfil.email }, {
                             $set: {
-                                "cliente": clienteExistente
+                                "cliente": clienteExistente.cliente
                             }
                         }, (errUpdate, docUpdate, resUpdate) => {
                             if (errUpdate == null) {

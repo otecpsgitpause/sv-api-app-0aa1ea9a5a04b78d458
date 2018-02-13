@@ -166,7 +166,7 @@ function transaccionPayPal(req,res){
                 let detailPay=data;
                 mgbCursosModel.findOne({"curso.codigoVenta":itemNumber},(err,resCurso)=>{
                     if(err==null && resCurso!=null){
-                        mgbUsuariosModel.findOne({"cliente.email":comprador},(errCli,resCli)=>{
+                        mgbUsuariosModel.findOne({"cliente.correoPago":comprador},(errCli,resCli)=>{
                             if(errCli==null && resCli!=null){
                                 
                                 // model inscripcion curso

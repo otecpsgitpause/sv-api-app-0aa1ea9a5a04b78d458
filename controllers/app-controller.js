@@ -204,9 +204,11 @@ function transaccionPayPal(req, res) {
                                 }, (err, raw) => {
                                     if (err == null) {
                                         //informar al usuario por correo que se inscribio en un curso
+                                        complement.sendResponse();
 
                                     } else {
                                         // error al inscribir al usuario en un curso
+                                        complement.sendResponse();
                                     }
                                 })
 
@@ -229,9 +231,11 @@ function transaccionPayPal(req, res) {
                                     if (err == null) {
                                         //informar al usuario por correo que se inscribio en un curso
                                         console.log('informando al usuario de la inscripción de un curso');
+                                        complement.sendResponse();
 
                                     } else {
                                         console.log('informando al usuario error de la inscripción de un curso');
+                                        complement.sendResponse();
                                         // error al inscribir al usuario en un curso
                                     }
                                 })
@@ -248,9 +252,11 @@ function transaccionPayPal(req, res) {
                             }, (err, raw) => {
                                 if (err == null) {
                                     //informar al usuario por correo que se inscribio en un curso
+                                    complement.sendResponse();
 
                                 } else {
                                     // error al inscribir al usuario en un curso
+                                    complement.sendResponse();
                                 }
                             })
                             //inscribir primer curso
@@ -258,17 +264,23 @@ function transaccionPayPal(req, res) {
                     } else {
                         //no se encontro al cliente
                         // res.status(200).json({ok:'ok'});
+                        complement.sendResponse();
                     }
                 })
             } else {
                 //no se encontro el curso
                 //   res.status(200).json({ok:'ok'});
+                complement.sendResponse();
             }
         })
         // res.status(200).json({ok:'ok'});
 
 
-
+        var complement={
+            sendResponse:()=>{
+                res.status(200).json({ok:'ok'});
+            }
+        }
 
     } catch (e) {
         //notificar al usuario por medio de un correo y a la otec que hubo un error al inscribir el curso

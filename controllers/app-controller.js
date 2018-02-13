@@ -192,7 +192,7 @@ function transaccionPayPal(req, res) {
                         if (misCursos.length > 0) {
                             //verificar Existencia Curso
                             let idxCurso = _.findIndex(misCursos, (o) => {
-
+                                return o.curso.data.codigoVenta==itemNumber;
                             })
                             if (idxCurso != -1) {
                                 resCli.cursosSuscrito[idxCurso] = modelObjectCursoSuscrito;

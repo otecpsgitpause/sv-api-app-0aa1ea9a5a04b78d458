@@ -253,15 +253,15 @@ function transaccionPayPal(req,res){
                                   }
                             }else{
                                 //no se encontro al cliente
-                            res.status(200).json({ok:'ok'});
+                           // res.status(200).json({ok:'ok'});
                             }
                         })
                     }else{
                         //no se encontro el curso
-                    res.status(200).json({ok:'ok'});
+                 //   res.status(200).json({ok:'ok'});
                     }
                 })
-                res.status(200).json({ok:'ok'});
+               // res.status(200).json({ok:'ok'});
 
     
     
@@ -269,7 +269,7 @@ function transaccionPayPal(req,res){
     }catch(e){
             //notificar al usuario por medio de un correo y a la otec que hubo un error al inscribir el curso
             console.log("tuvimos un problema al inscribir el curso");
-         res.status(200).json({ok:'ok'});
+        // res.status(200).json({ok:'ok'});
     
     }
     

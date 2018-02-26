@@ -194,7 +194,7 @@ function transaccionPayPal(req, res) {
                             let idxCurso = _.findIndex(misCursos, (o) => {
                                 return o.curso.data.codigoVenta==itemNumber;
                             })
-                            if (idxCurso != -1) {
+                            if (idxCurso > -1) {
                                 resCli.cursosSuscrito[idxCurso] = modelObjectCursoSuscrito;
 
                                 mgbUsuariosModel.update({ "cliente.correoPago": comprador }, {
@@ -264,12 +264,14 @@ function transaccionPayPal(req, res) {
                     } else {
                         //no se encontro al cliente
                         // res.status(200).json({ok:'ok'});
+                        console.log('usuario no encontrado');
                         complement.sendResponse();
                     }
                 })
             } else {
                 //no se encontro el curso
                 //   res.status(200).json({ok:'ok'});
+                console.log('curso no encontrado');
                 complement.sendResponse();
             }
         })
